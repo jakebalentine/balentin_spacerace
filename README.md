@@ -1,7 +1,7 @@
 # Game - Programming Assignments Private Repository
 ### Student Information
-  + Name: Tommy Trojan
-  + USC Email: ttrojan@usc.edu
+  + Name: Jacob Balentine
+  + USC Email: balentin@usc.edu
   + USC ID: 0123456789
 
 ### Game Information
@@ -21,5 +21,3 @@ echo "Write command here"
 echo "Write command here"
 ```
 
-### Screenshots -- [Optional]
-You can either remove this section or add screenshots if you wish.
