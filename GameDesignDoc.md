@@ -1,5 +1,5 @@
 ----
-### Space Race
+# Space Race
 
 ## Game "Things"
 
