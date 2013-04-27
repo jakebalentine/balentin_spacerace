@@ -19,6 +19,7 @@
 #include "asteroid.h"
 #include "drone.h"
 #include "player.h"
+#include "praetorian.h"
 
 #define WINDOW_MAX_X 350
 #define WINDOW_MAX_Y 350
@@ -63,8 +64,10 @@ class MainWindow : public QGraphicsView {
   /** Timer for animation */
   QTimer *timer;
   /** Vector of asteroids */
+  Player *player;
   std::vector<Asteroid *> asteroids;
   std::vector<Drone *> drones;
+  std::vector<Praetorian *> praetorians;
   
   QGraphicsPixmapItem *background;
   

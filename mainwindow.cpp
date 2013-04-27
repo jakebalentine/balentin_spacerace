@@ -13,6 +13,9 @@ void MainWindow::handleTimer() {
   for(int y= 0; y<drones.size(); y++){
     drones[y]->move( 600, 600 );
   }
+  for(int y= 0; y<praetorians.size(); y++){
+    praetorians[y]->move( 600, 600 );
+  }
 }
 
 void MainWindow::destroyAsteroid(Asteroid *thing){
@@ -24,21 +27,19 @@ void MainWindow::destroyDrone(Drone *thing){
 }
 
 void MainWindow::run(){
-  Player *thing;
-  Drone *thing2;
+  Praetorian *thing2;
   Asteroid *thing3;
   
-  thing= new Player(270, 520, this, scene);
-  scene->addItem(thing);
-  thing->setPos(thing->mapToParent(0, 0));
+  player= new Player(270, 520, this, scene);
+  scene->addItem(player);
   
   thing3= new Asteroid(270, 80, this, scene);
   scene->addItem(thing3);
   asteroids.push_back(thing3);
   
-  thing2= new Drone(50, 70, this, scene);
+  thing2= new Praetorian(50, 70, this, scene, player);
   scene->addItem(thing2);
-  drones.push_back(thing2);
+  praetorians.push_back(thing2);
 }
 
 MainWindow::MainWindow(){  
