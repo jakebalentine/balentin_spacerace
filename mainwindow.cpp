@@ -7,14 +7,30 @@
 #include "mainwindow.h"
 
 void MainWindow::handleTimer() {
+  
+  timerCheck++;
+  
   for(int x= 0; x<asteroids.size(); x++){
     asteroids[x]->move( WINDOW_MAX_X, WINDOW_MAX_Y );
   }
   for(int y= 0; y<drones.size(); y++){
     drones[y]->move( 600, 600 );
   }
-  for(int y= 0; y<praetorians.size(); y++){
-    praetorians[y]->move( 600, 600 );
+  for(int z= 0; z<praetorians.size(); z++){
+    praetorians[z]->move( 600, 600 );
+  }
+  for(int a= 0; a<death.size(); a++){
+    death[a]->move( 600, 600 );
+  }
+  
+  if(timerCheck==140){
+    for(int a= 0; a<death.size(); a++){
+      Praetorian *thing2;
+      thing2= new Praetorian(death[a]->getX(), death[a]->getY(), this, scene, player);
+      scene->addItem(thing2);
+      praetorians.push_back(thing2);
+    }
+    timerCheck= 0;
   }
 }
 
@@ -29,6 +45,7 @@ void MainWindow::destroyDrone(Drone *thing){
 void MainWindow::run(){
   Praetorian *thing2;
   Asteroid *thing3;
+  Deathknight *thing4;
   
   player= new Player(270, 520, this, scene);
   scene->addItem(player);
@@ -40,10 +57,16 @@ void MainWindow::run(){
   thing2= new Praetorian(50, 70, this, scene, player);
   scene->addItem(thing2);
   praetorians.push_back(thing2);
+  
+  thing4= new Deathknight(30, 100, this, scene);
+  scene->addItem(thing4);
+  death.push_back(thing4);
 }
 
 MainWindow::MainWindow(){  
 
+  timerCheck= 0;
+  
   scene= new QGraphicsScene(this);
   view= new QGraphicsView();
   view->setScene(scene);
