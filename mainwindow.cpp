@@ -2,14 +2,65 @@
 #include <QString>
 #include <cstdlib>
 #include <cstdio>
+#include <iostream>
+#include <ctime>
 #include "mainwindow.h"
+
+void MainWindow::handleTimer() {
+  for(int x= 0; x<asteroids.size(); x++){
+    asteroids[x]->move( WINDOW_MAX_X, WINDOW_MAX_Y );
+  }
+  for(int y= 0; y<drones.size(); y++){
+    drones[y]->move( 600, 600 );
+  }
+}
+
+void MainWindow::destroyAsteroid(Asteroid *thing){
+  scene->removeItem(thing);
+}
+void MainWindow::destroyDrone(Drone *thing){
+  
+  scene->removeItem(thing);
+}
+
+void MainWindow::run(){
+  Player *thing;
+  Drone *thing2;
+  Asteroid *thing3;
+  
+  thing= new Player(270, 520, this, scene);
+  scene->addItem(thing);
+  thing->setPos(thing->mapToParent(0, 0));
+  
+  thing3= new Asteroid(270, 80, this, scene);
+  scene->addItem(thing3);
+  asteroids.push_back(thing3);
+  
+  thing2= new Drone(50, 70, this, scene);
+  scene->addItem(thing2);
+  drones.push_back(thing2);
+}
 
 MainWindow::MainWindow(){  
 
-  scene= new QGraphicsScene();
-  view= new QGraphicsView(scene);
+  scene= new QGraphicsScene(this);
+  view= new QGraphicsView();
+  view->setScene(scene);
   view->setFixedSize( WINDOW_MAX_X*2, WINDOW_MAX_Y*2 );
   view->setWindowTitle( "Space Race");
+  //scene->setSceneRect(-350, -350, 350, 350);
+  QGraphicsRectItem *rectObj= new QGraphicsRectItem(0, 0, 600, 600);
+  scene->addItem(rectObj);
+  
+  view->setBackgroundBrush(QPixmap("images/background.png"));
+  
+  timer= new QTimer;
+    
+  timer = new QTimer(this);  
+  timer->setInterval(20);
+  connect(timer, SIGNAL(timeout()), this, SLOT(handleTimer()));
+  
+  srand(time(NULL));
   
   widget1= new QWidget;
   vLay = new QVBoxLayout(widget1);
@@ -52,4 +103,5 @@ MainWindow::~MainWindow(){
 
 void MainWindow::show(){
   widget1->show();
+  timer->start();
 }

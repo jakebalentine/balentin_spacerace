@@ -5,6 +5,7 @@
 #include <QWidget>
 #include <QGraphicsScene>
 #include <QGraphicsView>
+#include <QGraphicsRectItem>
 #include <QTimer>
 #include <QTimeLine>
 #include <QGridLayout>
@@ -13,6 +14,11 @@
 #include <QRadioButton>
 #include <QFont>
 #include <QListView>
+#include <QGraphicsPixmapItem>
+#include <vector>
+#include "asteroid.h"
+#include "drone.h"
+#include "player.h"
 
 #define WINDOW_MAX_X 350
 #define WINDOW_MAX_Y 350
@@ -32,6 +38,8 @@ class MainWindow : public QGraphicsView {
   ~MainWindow();
   /** Displays interface to user */
   void show();
+  void destroyAsteroid(Asteroid *thing);
+  void destroyDrone(Drone *thing);
   
  private:
   /** Inherited widget */
@@ -52,14 +60,23 @@ class MainWindow : public QGraphicsView {
   QPushButton *quitButton;
   /** Score button */
   QPushButton *scoreButton;
+  /** Timer for animation */
+  QTimer *timer;
+  /** Vector of asteroids */
+  std::vector<Asteroid *> asteroids;
+  std::vector<Drone *> drones;
+  
+  QGraphicsPixmapItem *background;
   
   public slots:
-   /** Creates interative board */
-   //void run();
+   /** Starts the game */
+   void run();
    /** Runs puzzle solver */
    //void cheatRun();
    /** Used for animation */
    //void handleTimer();
+   /** Used for animation */
+   void handleTimer();
 
 
 };
