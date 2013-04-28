@@ -2,11 +2,11 @@
 ### Student Information
   + Name: Jacob Balentine
   + USC Email: balentin@usc.edu
-  + USC ID: 0123456789
+  + USC ID: 7732219755
 
 ### Game Information
-  + Game Name: myAwsomeGame
-  + Game Description: One sentence game description
+  + Game Name: Space Race
+  + Game Description: Avoid and destroy alien enemies as you shoot through the cosmos.
   + [Game Design Doc](GameDesignDoc.md)
 
 
@@ -14,11 +14,14 @@
 The grader should use the following procedure to compile and run the code:
 ```shell
 #Compile Instructions
-echo "Write command here"
+qmake -project
+qmake
+make
 #Doxygen Instructions
-echo "Write command here"
+doxygen -g config.txt
+doxygen config.txt
 #Command to run
-echo "Write command here"
+./game_balentin (the name of the folder where you compiled the code)
 ```
 
 
