@@ -6,66 +6,173 @@
 #include <ctime>
 #include "mainwindow.h"
 
+using namespace std;
+
 void MainWindow::handleTimer() {
   
+  if(timerCheck<200){
   timerCheck++;
+  }
   
-  for(int x= 0; x<asteroids.size(); x++){
+  player->move(600, 600);
+  
+  for(unsigned int b= 0; b<lasers.size(); b++){
+    lasers[b]->move(600, 600);
+  }
+  for(unsigned int x= 0; x<asteroids.size(); x++){
     asteroids[x]->move( WINDOW_MAX_X, WINDOW_MAX_Y );
+    for(unsigned int u= 0; u<lasers.size(); u++){
+      if(lasers[u]->rect().intersects(asteroids[x]->rect())){
+       destroyLaser(lasers[u]);
+       destroyAsteroid(asteroids[x]);
+       }
+    }
   }
-  for(int y= 0; y<drones.size(); y++){
+  for(unsigned int y= 0; y<drones.size(); y++){
     drones[y]->move( 600, 600 );
+    for(unsigned int u= 0; u<lasers.size(); u++){
+      if(lasers[u]->rect().intersects(drones[y]->rect())){
+       destroyLaser(lasers[u]);
+       destroyDrone(drones[y]);
+       }
+    }
   }
-  for(int z= 0; z<praetorians.size(); z++){
+  for(unsigned int z= 0; z<praetorians.size(); z++){
     praetorians[z]->move( 600, 600 );
+    for(unsigned int u= 0; u<lasers.size(); u++){
+      if(lasers[u]->rect().intersects(praetorians[z]->rect())){
+       destroyLaser(lasers[u]);
+       destroyPraetorian(praetorians[z]);
+       }
+    }
   }
-  for(int a= 0; a<death.size(); a++){
+  for(unsigned int a= 0; a<death.size(); a++){
     death[a]->move( 600, 600 );
+    for(unsigned int u= 0; u<lasers.size(); u++){
+      if(lasers[u]->rect().intersects(death[a]->rect())){
+       destroyLaser(lasers[u]);
+       destroyDeathknight(death[a]);
+       }
+    }
   }
+  for(unsigned int c= 0; c<packages.size(); c++){
+    packages[c]->move(600, 600);
+    if(packages[c]->rect().intersects(player->rect())){
+      destroyPackage(packages[c]);
+      player->increaseMultiplier();
+    }
+  }
+  
   
   if(timerCheck==140){
-    for(int a= 0; a<death.size(); a++){
-      Praetorian *thing2;
-      thing2= new Praetorian(death[a]->getX(), death[a]->getY(), this, scene, player);
-      scene->addItem(thing2);
-      praetorians.push_back(thing2);
+    for(unsigned int a= 0; a<death.size(); a++){
+      Praetorian *thing;
+      thing= new Praetorian(death[a]->getX(), death[a]->getY(), this, scene, player);
+      scene->addItem(thing);
+      praetorians.push_back(thing);
     }
-    timerCheck= 0;
+  }
+  if(timerCheck==200){
+    int randCheck= rand() % 100+1;
+    if(randCheck>=1 && randCheck<=5){
+      Deathknight *thing1= new Deathknight(250, 200, this, scene);
+      scene->addItem(thing1);
+      death.push_back(thing1);
+    }
+    if(randCheck>=6 && randCheck<=15){
+      Care *thing2= new Care((rand() % 300+100), 100, this, scene);
+      scene->addItem(thing2);
+      packages.push_back(thing2);
+    }
+    if(randCheck>=16 && randCheck<=40){
+      Praetorian *thing3= new Praetorian((rand() % 300+100), 100, this, scene, player);
+      scene->addItem(thing3);
+      praetorians.push_back(thing3);
+    }
+    if(randCheck>=41 && randCheck<=85){
+      Drone *thing4= new Drone((rand() % 300+100), 100, this, scene);
+      scene->addItem(thing4);
+      drones.push_back(thing4);
+    }
+    if(randCheck>=86 && randCheck<=100){
+      Asteroid *thing5= new Asteroid((rand() % 300+100), 100, this, scene);
+      scene->addItem(thing5);
+      asteroids.push_back(thing5);
+    }
+    timerCheck= timerCheck-difficulty;
+    difficulty--;
+  }
+}
+
+void MainWindow::addLaser(Laser *laser){
+  scene->addItem(laser);
+  lasers.push_back(laser);
+}
+
+void MainWindow::destroyLaser(Laser *laser){
+  scene->removeItem(laser);
+  for(unsigned int x= 0; x<lasers.size(); x++){
+    if(laser==lasers[x]){
+      lasers.erase(lasers.begin()+x);
+    }
   }
 }
 
 void MainWindow::destroyAsteroid(Asteroid *thing){
   scene->removeItem(thing);
+  for(unsigned int x= 0; x<asteroids.size(); x++){
+    if(thing==asteroids[x]){
+      asteroids.erase(asteroids.begin()+x);
+      player->increasePoints(10);
+    }
+  }
 }
 void MainWindow::destroyDrone(Drone *thing){
-  
   scene->removeItem(thing);
+  for(unsigned int x= 0; x<drones.size(); x++){
+    if(thing==drones[x]){
+      drones.erase(drones.begin()+x);
+      player->increasePoints(25);
+    }
+  }
+}
+
+void MainWindow::destroyPraetorian(Praetorian *thing){
+  scene->removeItem(thing);
+  for(unsigned int x= 0; x<praetorians.size(); x++){
+    if(thing==praetorians[x]){
+      praetorians.erase(praetorians.begin()+x);
+      player->increasePoints(75);
+    }
+  }
+}
+void MainWindow::destroyDeathknight(Deathknight *thing){
+  scene->removeItem(thing);
+  for(unsigned int x= 0; x<death.size(); x++){
+    if(thing==death[x]){
+      death.erase(death.begin()+x);
+      player->increasePoints(300);
+    }
+  }
+}
+
+void MainWindow::destroyPackage(Care *thing){
+  scene->removeItem(thing);
+  for(unsigned int x= 0; x<packages.size(); x++){
+    if(thing==packages[x]){
+      packages.erase(packages.begin()+x);
+    }
+  }
 }
 
 void MainWindow::run(){
-  Praetorian *thing2;
-  Asteroid *thing3;
-  Deathknight *thing4;
-  
-  player= new Player(270, 520, this, scene);
-  scene->addItem(player);
-  
-  thing3= new Asteroid(270, 80, this, scene);
-  scene->addItem(thing3);
-  asteroids.push_back(thing3);
-  
-  thing2= new Praetorian(50, 70, this, scene, player);
-  scene->addItem(thing2);
-  praetorians.push_back(thing2);
-  
-  thing4= new Deathknight(30, 100, this, scene);
-  scene->addItem(thing4);
-  death.push_back(thing4);
+  timer->start();  
 }
 
 MainWindow::MainWindow(){  
 
   timerCheck= 0;
+  difficulty= 200;
   
   scene= new QGraphicsScene(this);
   view= new QGraphicsView();
@@ -75,6 +182,18 @@ MainWindow::MainWindow(){
   //scene->setSceneRect(-350, -350, 350, 350);
   QGraphicsRectItem *rectObj= new QGraphicsRectItem(0, 0, 600, 600);
   scene->addItem(rectObj);
+  player= new Player(270, 520, this, scene);
+  LeftMove *left= new LeftMove(0, 520, player);
+  QBrush brush(Qt::red);
+  left->setBrush(brush);
+  RightMove *right= new RightMove(560, 520, player);
+  QBrush brush1(Qt::blue);
+  right->setBrush(brush1);
+  scene->addItem(player);
+  scene->addItem(left);
+  scene->addItem(right);
+  
+  this->setFocusPolicy(Qt::StrongFocus);
   
   view->setBackgroundBrush(QPixmap("images/background.png"));
   
@@ -127,5 +246,4 @@ MainWindow::~MainWindow(){
 
 void MainWindow::show(){
   widget1->show();
-  timer->start();
 }

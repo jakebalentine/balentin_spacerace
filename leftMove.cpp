@@ -4,7 +4,7 @@
 #include "leftMove.h"
 #include "mainwindow.h"
 
-LeftMove::LeftMove(double nx, double ny, MainWindow *mw, QGraphicsScene *s, Player *p) :
+LeftMove::LeftMove(double nx, double ny, Player *p) :
     QGraphicsRectItem(nx, ny, 40, 40) {
 
   player= p;
@@ -13,6 +13,8 @@ LeftMove::LeftMove(double nx, double ny, MainWindow *mw, QGraphicsScene *s, Play
 
 void LeftMove::mousePressEvent(QGraphicsSceneMouseEvent *event){
   int testX= player->getX();
+   
+   player->fire();
    
    if (testX < 41 ){
     return;

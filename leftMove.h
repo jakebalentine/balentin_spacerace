@@ -14,7 +14,7 @@ class MainWindow;
 class LeftMove : public QGraphicsRectItem {
 
 public:
-    LeftMove(double nx, double ny, MainWindow *mw, QGraphicsScene *s, Player *p);
+    LeftMove(double nx, double ny, Player *p);
     
 protected:
   void mousePressEvent(QGraphicsSceneMouseEvent *event);

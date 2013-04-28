@@ -4,7 +4,7 @@
 #include "rightMove.h"
 #include "mainwindow.h"
 
-RightMove::RightMove(double nx, double ny, MainWindow *mw, QGraphicsScene *s, Player *p) :
+RightMove::RightMove(double nx, double ny, Player *p) :
     QGraphicsRectItem(nx, ny, 40, 40) {
 
   player= p;
@@ -13,6 +13,9 @@ RightMove::RightMove(double nx, double ny, MainWindow *mw, QGraphicsScene *s, Pl
 
 void RightMove::mousePressEvent(QGraphicsSceneMouseEvent *event){
   int testX= player->getX();
+  
+  player->fire();
+  
   if ( (testX+40) > 560 ){
     return;
   }

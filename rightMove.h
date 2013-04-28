@@ -14,7 +14,7 @@ class MainWindow;
 class RightMove : public QGraphicsRectItem {
 
 public:
-    RightMove(double nx, double ny, MainWindow *mw, QGraphicsScene *s, Player *p);
+    RightMove(double nx, double ny, Player *p);
     
 protected:
   void mousePressEvent(QGraphicsSceneMouseEvent *event);

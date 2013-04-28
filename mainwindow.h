@@ -15,12 +15,17 @@
 #include <QFont>
 #include <QListView>
 #include <QGraphicsPixmapItem>
+#include <QKeyEvent>
 #include <vector>
+#include "laser.h"
 #include "asteroid.h"
 #include "drone.h"
 #include "player.h"
 #include "praetorian.h"
 #include "deathknight.h"
+#include "care.h"
+#include "leftMove.h"
+#include "rightMove.h"
 
 #define WINDOW_MAX_X 350
 #define WINDOW_MAX_Y 350
@@ -29,7 +34,7 @@
  * A class that creates the interface for the user
  * to interact with.
  */
-class MainWindow : public QGraphicsView {
+class MainWindow : public QWidget {
   Q_OBJECT
   
 
@@ -40,8 +45,13 @@ class MainWindow : public QGraphicsView {
   ~MainWindow();
   /** Displays interface to user */
   void show();
+  void addLaser(Laser *laser);
+  void destroyLaser(Laser *laser);
   void destroyAsteroid(Asteroid *thing);
   void destroyDrone(Drone *thing);
+  void destroyPraetorian(Praetorian *thing);
+  void destroyDeathknight(Deathknight *thing);
+  void destroyPackage(Care *thing);
   
  private:
   /** Inherited widget */
@@ -70,7 +80,9 @@ class MainWindow : public QGraphicsView {
   std::vector<Drone *> drones;
   std::vector<Praetorian *> praetorians;
   std::vector<Deathknight *> death;
-  int timerCheck;
+  std::vector<Laser *> lasers;
+  std::vector<Care *> packages;
+  int timerCheck, difficulty;
   
   QGraphicsPixmapItem *background;
   
