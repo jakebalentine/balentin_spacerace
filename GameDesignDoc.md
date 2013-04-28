@@ -29,10 +29,10 @@ The things of Space Race are obstacles/enemies as well as a one powerup! Each en
     
 ## Controls
 
-  1. Left and Right arrow keys:
-    * Move side to side on screen.
-  2. Space:
-    * Fire spaceship's laser
+  1. Click blue and red forcefields
+    * Move between forcefields, left and right.
+  2. Click ship
+    * Shoot lasers at enemies.
 
 ## Score
 
