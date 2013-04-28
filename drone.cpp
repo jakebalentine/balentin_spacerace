@@ -5,6 +5,14 @@
 
 using namespace std;
 
+/** 
+ * Constructor
+ *
+ * @param coordinate x
+ * @param coordinate y
+ * @param pointer to parent window
+ * @param pointer to parent scene 
+ */
 Drone::Drone(double nx, double ny, MainWindow *mw, QGraphicsScene *s) :
     QGraphicsRectItem(nx, ny, 40, 40) {
     x = nx;
@@ -20,10 +28,16 @@ Drone::Drone(double nx, double ny, MainWindow *mw, QGraphicsScene *s) :
     
 }
 
+/**
+ * Destructor
+ */
 Drone::~Drone(){
 
 }
 
+/** 
+ * Take away one life 
+ */
 bool Drone::hit(){
   --life;
   if(life<1){
@@ -34,22 +48,44 @@ bool Drone::hit(){
   }
 }
 
+/** 
+ * Accessor for velocityX 
+ */
 int Drone::getVelocityX() {
     return velocityX;
 }
 
+/** 
+ * Accessor for velocityY 
+ */
 int Drone::getVelocityY() {
     return velocityY;
 }
 
+/** 
+ * Change velocityX 
+ *
+ * @param new value
+ */
 void Drone::setVelocityX( int vx ) {
     velocityX = vx;
 }
 
+/** 
+ * Change velocityY 
+ *
+ * @param new value
+ */
 void Drone::setVelocityY( int vy ) {
     velocityY = vy;
 }
 
+/** 
+ * Move the object 
+ * 
+ * @param width of window
+ * @param height of window
+ */
 void Drone::move( int windowMaxX, int windowMaxY ) {
     
     x += velocityX;
@@ -80,19 +116,34 @@ void Drone::move( int windowMaxX, int windowMaxY ) {
 
 }
 
-
+/**
+ * Accessor for X
+ */
 int Drone::getX() {
     return x;
 }
 
+/**
+ * Accessor for Y
+ */
 int Drone::getY() {
     return y;
 }
 
+/**
+ * Change X
+ *
+ * @param new x coordinate
+ */
 void Drone::setX(int nx) {
     x = nx;
 }
 
+/**
+ * Change Y
+ *
+ * @param new x coordinate
+ */
 void Drone::setY(int ny) {
     y = ny;
 }

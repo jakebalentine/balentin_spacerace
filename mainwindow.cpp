@@ -8,6 +8,11 @@
 
 using namespace std;
 
+/**
+ * Handles timer used for implementing animation.
+ * Moves each object and checks for collision.
+ * Also, speeds up rate of new enemies.
+ */
 void MainWindow::handleTimer() {
   
   scoreDisplay->display(player->getScore());
@@ -20,7 +25,7 @@ void MainWindow::handleTimer() {
   player->move();
   
   for(unsigned int b= 0; b<lasers.size(); b++){
-    lasers[b]->move(600, 600);
+    lasers[b]->move();
   }
   for(unsigned int x= 0; x<asteroids.size(); x++){
     asteroids[x]->move( WINDOW_MAX_X, WINDOW_MAX_Y );
@@ -127,11 +132,20 @@ void MainWindow::handleTimer() {
   }
 }
 
+/**
+ * Fires laser.
+ * @param Laser pointer sent from player object.
+ */
 void MainWindow::addLaser(Laser *laser){
   scene->addItem(laser);
   lasers.push_back(laser);
 }
 
+/**
+ * Destroys laser when it hits something or
+ * goes off screen.
+ * @param Laser pointer
+ */
 void MainWindow::destroyLaser(Laser *laser){
   scene->removeItem(laser);
   for(unsigned int x= 0; x<lasers.size(); x++){
@@ -141,6 +155,11 @@ void MainWindow::destroyLaser(Laser *laser){
   }
 }
 
+/**
+ * Destroys asteroid when life is depeleted or 
+ * when it goes off screen.
+ * @param Asteroid pointer
+ */
 void MainWindow::destroyAsteroid(Asteroid *thing){
   scene->removeItem(thing);
   for(unsigned int x= 0; x<asteroids.size(); x++){
@@ -150,6 +169,12 @@ void MainWindow::destroyAsteroid(Asteroid *thing){
     }
   }
 }
+
+/**
+ * Destroys drone when life is depeleted or 
+ * when it goes off screen.
+ * @param Drone pointer
+ */
 void MainWindow::destroyDrone(Drone *thing){
   scene->removeItem(thing);
   for(unsigned int x= 0; x<drones.size(); x++){
@@ -160,6 +185,11 @@ void MainWindow::destroyDrone(Drone *thing){
   }
 }
 
+/**
+ * Destroys praetorian when life is depeleted or 
+ * when it goes off screen.
+ * @param Praetorian pointer
+ */
 void MainWindow::destroyPraetorian(Praetorian *thing){
   scene->removeItem(thing);
   for(unsigned int x= 0; x<praetorians.size(); x++){
@@ -169,6 +199,11 @@ void MainWindow::destroyPraetorian(Praetorian *thing){
     }
   }
 }
+
+/**
+ * Destroys deathknight when life is depleted 
+ * @param Deathknight pointer
+ */
 void MainWindow::destroyDeathknight(Deathknight *thing){
   scene->removeItem(thing);
   for(unsigned int x= 0; x<death.size(); x++){
@@ -179,6 +214,10 @@ void MainWindow::destroyDeathknight(Deathknight *thing){
   }
 }
 
+/**
+ * Destorys package when picked up by player.
+ * @param care package pointer
+ */
 void MainWindow::destroyPackage(Care *thing){
   scene->removeItem(thing);
   for(unsigned int x= 0; x<packages.size(); x++){
@@ -188,7 +227,9 @@ void MainWindow::destroyPackage(Care *thing){
   }
 }
 
-
+/**
+ * Pauses and unpauses window 
+ */
 void MainWindow::pause(){
   if(timer->isActive()){
     timer->stop();
@@ -198,6 +239,10 @@ void MainWindow::pause(){
   }
 }
 
+/**
+ * Starts the game or restarts application
+ * if game has already started.
+ */
 void MainWindow::run(){
   if(timer->isActive()){
       gameOver();
@@ -207,10 +252,16 @@ void MainWindow::run(){
     }
 }
 
+/**
+ *  Restarts application
+ */
 void MainWindow::gameOver(){
   qApp->exit( restartCode );
 }
 
+/**
+ * Constructor
+ */
 MainWindow::MainWindow(){  
 
   timerCheck= 0;
@@ -280,6 +331,9 @@ MainWindow::MainWindow(){
 
 }
 
+/**
+ * Destructor
+ */
 MainWindow::~MainWindow(){
   delete scene;
   delete view;
@@ -291,6 +345,9 @@ MainWindow::~MainWindow(){
   delete widget1;
 }
 
+/**
+ * Displays interface to viewer
+ */
 void MainWindow::show(){
   widget1->show();
 }

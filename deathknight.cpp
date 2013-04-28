@@ -5,6 +5,14 @@
 
 using namespace std;
 
+/** 
+ * Constructor
+ *
+ * @param coordinate x
+ * @param coordinate y
+ * @param pointer to parent window
+ * @param pointer to parent scene 
+ */
 Deathknight::Deathknight(double nx, double ny, MainWindow *mw, QGraphicsScene *s) :
     QGraphicsRectItem(nx, ny, 120, 120) {
     x = nx;
@@ -20,10 +28,16 @@ Deathknight::Deathknight(double nx, double ny, MainWindow *mw, QGraphicsScene *s
     
 }
 
+/**
+ * Destructor
+ */
 Deathknight::~Deathknight(){
 
 }
 
+/** 
+ * Take away one life 
+ */
 bool Deathknight::hit(){
   --life;
   if(life<1){
@@ -34,22 +48,44 @@ bool Deathknight::hit(){
   }
 }
 
+/** 
+ * Accessor for velocityX 
+ */
 int Deathknight::getVelocityX() {
     return velocityX;
 }
 
+/** 
+ * Accessor for velocityY 
+ */
 int Deathknight::getVelocityY() {
     return velocityY;
 }
 
+/** 
+ * Change velocityX 
+ *
+ * @param new value
+ */
 void Deathknight::setVelocityX( int vx ) {
     velocityX = vx;
 }
 
+/** 
+ * Change velocityY 
+ *
+ * @param new value
+ */
 void Deathknight::setVelocityY( int vy ) {
     velocityY = vy;
 }
 
+/** 
+ * Move the object 
+ * 
+ * @param width of window
+ * @param height of window
+ */
 void Deathknight::move( int windowMaxX, int windowMaxY ) {
     
     x += velocityX;
@@ -79,23 +115,34 @@ void Deathknight::move( int windowMaxX, int windowMaxY ) {
 
 }
 
-void Deathknight::birth(){
-  
-}
-
-
+/**
+ * Accessor for X
+ */
 int Deathknight::getX() {
     return x;
 }
 
+/**
+ * Accessor for Y
+ */
 int Deathknight::getY() {
     return y;
 }
 
+/**
+ * Change X
+ *
+ * @param new x coordinate
+ */
 void Deathknight::setX(int nx) {
     x = nx;
 }
 
+/**
+ * Change Y
+ *
+ * @param new y coordinate
+ */
 void Deathknight::setY(int ny) {
     y = ny;
 }

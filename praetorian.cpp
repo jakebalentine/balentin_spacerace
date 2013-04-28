@@ -5,6 +5,15 @@
 
 using namespace std;
 
+/** 
+ * Constructor
+ *
+ * @param coordinate x
+ * @param coordinate y
+ * @param pointer to parent window
+ * @param pointer to parent scene 
+ * @param pointer to player object
+ */
 Praetorian::Praetorian(double nx, double ny, MainWindow *mw, QGraphicsScene *s, Player *p) :
     QGraphicsRectItem(nx, ny, 70, 70) {
     x = nx;
@@ -21,10 +30,16 @@ Praetorian::Praetorian(double nx, double ny, MainWindow *mw, QGraphicsScene *s, 
     
 }
 
+/**
+ * Destructor
+ */
 Praetorian::~Praetorian(){
 
 }
 
+/** 
+ * Take away one life 
+ */
 bool Praetorian::hit(){
   --life;
   if(life<1){
@@ -35,22 +50,44 @@ bool Praetorian::hit(){
   }
 }
 
+/** 
+ * Accessor for velocityX 
+ */
 int Praetorian::getVelocityX() {
     return velocityX;
 }
 
+/** 
+ * Accessor for velocityY 
+ */
 int Praetorian::getVelocityY() {
     return velocityY;
 }
 
+/** 
+ * Change velocityX 
+ *
+ * @param new value
+ */
 void Praetorian::setVelocityX( int vx ) {
     velocityX = vx;
 }
 
+/** 
+ * Change velocityY 
+ *
+ * @param new value
+ */
 void Praetorian::setVelocityY( int vy ) {
     velocityY = vy;
 }
 
+/** 
+ * Move the object 
+ * 
+ * @param width of window
+ * @param height of window
+ */
 void Praetorian::move( int windowMaxX, int windowMaxY ) {
     
     x += ( (player->getX()) - (x) );
@@ -80,19 +117,34 @@ void Praetorian::move( int windowMaxX, int windowMaxY ) {
 
 }
 
-
+/**
+ * Accessor for X
+ */
 int Praetorian::getX() {
     return x;
 }
 
+/**
+ * Accessor for Y
+ */
 int Praetorian::getY() {
     return y;
 }
 
+/**
+ * Change X
+ *
+ * @param new x coordinate
+ */
 void Praetorian::setX(int nx) {
     x = nx;
 }
 
+/**
+ * Change Y
+ *
+ * @param new y coordinate
+ */
 void Praetorian::setY(int ny) {
     y = ny;
 }

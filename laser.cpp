@@ -5,6 +5,13 @@
 
 using namespace std;
 
+/** 
+ * Constructor
+ *
+ * @param coordinate x
+ * @param coordinate y
+ * @param pointer to parent window
+ */
 Laser::Laser(double nx, double ny, MainWindow *mw) :
     QGraphicsRectItem(nx, ny, 20, 20) {
     x = nx;
@@ -17,11 +24,17 @@ Laser::Laser(double nx, double ny, MainWindow *mw) :
     
 }
 
+/**
+ * Destructor
+ */
 Laser::~Laser(){
 
 }
 
-void Laser::move( int windowMaxX, int windowMaxY ) {
+/** 
+ * Move the object 
+ */
+void Laser::move() {
     
     x += velocityX;
     y += velocityY;
@@ -38,10 +51,16 @@ void Laser::move( int windowMaxX, int windowMaxY ) {
 
 }
 
+/**
+ * Accessor for X
+ */
 int Laser::getX() {
     return x;
 }
 
+/**
+ * Accessor for Y
+ */
 int Laser::getY() {
     return y;
 }

@@ -8,30 +8,36 @@
 class MainWindow;
 
 /**
-  
-  */
+ * Laser object that is fired by player
+ */
 class Laser : public QGraphicsRectItem {
 
 public:
+    /** Constructor */
     Laser(double nx, double ny, MainWindow *mw);
+    /** Destructor */
     ~Laser();
-    void setX( int x );
-    void setY( int y );
-    void setVelocityX( int vx );
-    void setVelocityY( int vy );
+    /** Accessor for X */
     int getX();
+    /** Accessor for Y */ 
     int getY();
-    int getVelocityX();
-    int getVelocityY();
-    void move(int windowMaxX, int windowMaxY );
+    /** Move the object */
+    void move();
     
 private:
+    /** Coordinate X */
     int x;
+    /** Coordinate Y */
     int y;
+    /** Rect width */
     int width;
+    /** Rect height */
     int height;
+    /** Object's horizontal speed */
     int velocityX;
+    /** Object's vertical speed */
     int velocityY;
+    /** Pointer to parent window */
     MainWindow *window;
 
 };

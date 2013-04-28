@@ -46,13 +46,21 @@ class MainWindow : public QWidget {
   ~MainWindow();
   /** Displays interface to user */
   void show();
+  /** Fire laser */
   void addLaser(Laser *laser);
+  /** Destroys laser after contact */
   void destroyLaser(Laser *laser);
+  /** Destroys asteroid */
   void destroyAsteroid(Asteroid *thing);
+  /** Destroys drone */
   void destroyDrone(Drone *thing);
+  /** Destroy praetorian */
   void destroyPraetorian(Praetorian *thing);
+  /** Destroy deathknight */
   void destroyDeathknight(Deathknight *thing);
+  /** Destroy care package */
   void destroyPackage(Care *thing);
+  /** Restarts application */
   void gameOver();
   
  private:
@@ -80,16 +88,24 @@ class MainWindow : public QWidget {
   QLCDNumber *lifeDisplay;
   /** Timer for animation */
   QTimer *timer;
-  /** Vector of asteroids */
+  /** Player object */
   Player *player;
+  /** Vector of asteroids */
   std::vector<Asteroid *> asteroids;
+  /** Vector of drones */
   std::vector<Drone *> drones;
+  /** Vector of praetorians */
   std::vector<Praetorian *> praetorians;
+  /** Vector of deathknights */
   std::vector<Deathknight *> death;
+  /** Vector of lasers */
   std::vector<Laser *> lasers;
+  /** Vector of packages */
   std::vector<Care *> packages;
+  /** integers to keep track of timer and speed */
   int timerCheck, difficulty, restartCode;
   
+  /** Background image */
   QGraphicsPixmapItem *background;
   
   public slots:

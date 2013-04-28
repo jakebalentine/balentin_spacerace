@@ -5,6 +5,14 @@
 
 using namespace std;
 
+/** 
+ * Constructor
+ *
+ * @param coordinate x
+ * @param coordinate y
+ * @param pointer to parent window
+ * @param pointer to parent scene 
+ */
 Asteroid::Asteroid(double nx, double ny, MainWindow *mw, QGraphicsScene *s) :
     QGraphicsRectItem(nx, ny, 60, 60) {
     x = nx;
@@ -20,10 +28,16 @@ Asteroid::Asteroid(double nx, double ny, MainWindow *mw, QGraphicsScene *s) :
     
 }
 
+/**
+ * Destructor
+ */
 Asteroid::~Asteroid(){
 
 }
 
+/** 
+ * Take away one life 
+ */
 bool Asteroid::hit(){
   --life;
   if(life<1){
@@ -34,22 +48,44 @@ bool Asteroid::hit(){
   }
 }
 
+/** 
+ * Accessor for velocityX 
+ */
 int Asteroid::getVelocityX() {
     return velocityX;
 }
 
+/** 
+ * Accessor for velocityY 
+ */
 int Asteroid::getVelocityY() {
     return velocityY;
 }
 
+/** 
+ * Change velocityX 
+ *
+ * @param new value
+ */
 void Asteroid::setVelocityX( int vx ) {
     velocityX = vx;
 }
 
+/** 
+ * Change velocityY 
+ *
+ * @param new value
+ */
 void Asteroid::setVelocityY( int vy ) {
     velocityY = vy;
 }
 
+/** 
+ * Move the object
+ *
+ * @param length of window
+ * @param height of window 
+ */
 void Asteroid::move( int windowMaxX, int windowMaxY ) {
     
     x += velocityX;
@@ -86,18 +122,34 @@ void Asteroid::move( int windowMaxX, int windowMaxY ) {
 }
 
 
+/**
+ * Accessor for X
+ */
 int Asteroid::getX() {
     return x;
 }
 
+/**
+ * Accessor for Y
+ */
 int Asteroid::getY() {
     return y;
 }
 
+/**
+ * Change X
+ *
+ * @param new x coordinate
+ */
 void Asteroid::setX(int nx) {
     x = nx;
 }
 
+/**
+ * Change Y
+ *
+ * @param new y coordinate
+ */
 void Asteroid::setY(int ny) {
     y = ny;
 }

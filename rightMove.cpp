@@ -4,6 +4,14 @@
 #include "rightMove.h"
 #include "mainwindow.h"
 
+/** 
+ * Constructor
+ *
+ * @param coordinate x
+ * @param coordinate y
+ * @param pointer to player object
+ * @param pointer to parent scene 
+ */
 RightMove::RightMove(double nx, double ny, Player *p, QGraphicsScene *s) :
     QGraphicsRectItem(nx, ny, 40, 40) {
 
@@ -14,6 +22,9 @@ RightMove::RightMove(double nx, double ny, Player *p, QGraphicsScene *s) :
    
 }
 
+/**
+ *  Event triggered when object is clicked
+ */
 void RightMove::mousePressEvent(QGraphicsSceneMouseEvent *event){
   int testX= player->getX();
   
