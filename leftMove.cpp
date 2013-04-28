@@ -4,10 +4,13 @@
 #include "leftMove.h"
 #include "mainwindow.h"
 
-LeftMove::LeftMove(double nx, double ny, Player *p) :
+LeftMove::LeftMove(double nx, double ny, Player *p, QGraphicsScene *s) :
     QGraphicsRectItem(nx, ny, 40, 40) {
 
   player= p;
+  scene= s;
+  image= new QGraphicsPixmapItem(QPixmap("images/blackhole.png"), this, scene);
+  image->setPos(nx,ny);
    
 }
 

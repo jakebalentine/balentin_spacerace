@@ -14,13 +14,15 @@ class MainWindow;
 class LeftMove : public QGraphicsRectItem {
 
 public:
-    LeftMove(double nx, double ny, Player *p);
+    LeftMove(double nx, double ny, Player *p, QGraphicsScene *s);
     
 protected:
   void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
 private:
     Player *player;
+    QGraphicsPixmapItem *image;
+    QGraphicsScene *scene;
 
 };
 

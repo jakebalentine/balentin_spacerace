@@ -13,7 +13,7 @@ Asteroid::Asteroid(double nx, double ny, MainWindow *mw, QGraphicsScene *s) :
     height = 60;
     velocityX = 4;
     velocityY = 2;
-    life= 1;
+    life= 2;
     window= mw;
     scene= s;
     image= new QGraphicsPixmapItem(QPixmap("images/asteroid.png"), this);
@@ -22,6 +22,16 @@ Asteroid::Asteroid(double nx, double ny, MainWindow *mw, QGraphicsScene *s) :
 
 Asteroid::~Asteroid(){
 
+}
+
+bool Asteroid::hit(){
+  --life;
+  if(life<1){
+    return true;
+  }
+  else{
+    return false;
+  }
 }
 
 int Asteroid::getVelocityX() {

@@ -16,6 +16,7 @@ public:
     void setY( int y );
     void setVelocityX( int vx );
     void setVelocityY( int vy );
+    bool hit();
     int getX();
     int getY();
     int getVelocityX();

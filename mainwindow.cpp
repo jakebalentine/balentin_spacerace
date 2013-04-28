@@ -10,40 +10,61 @@ using namespace std;
 
 void MainWindow::handleTimer() {
   
+  scoreDisplay->display(player->getScore());
+  lifeDisplay->display(player->getLife());
+  
   if(timerCheck<200){
   timerCheck++;
   }
   
-  player->move(600, 600);
+  player->move();
   
   for(unsigned int b= 0; b<lasers.size(); b++){
     lasers[b]->move(600, 600);
   }
   for(unsigned int x= 0; x<asteroids.size(); x++){
     asteroids[x]->move( WINDOW_MAX_X, WINDOW_MAX_Y );
+    if(player->rect().intersects(asteroids[x]->rect())){
+      player->decreaseLife();
+       destroyAsteroid(asteroids[x]);
+    }
     for(unsigned int u= 0; u<lasers.size(); u++){
       if(lasers[u]->rect().intersects(asteroids[x]->rect())){
        destroyLaser(lasers[u]);
-       destroyAsteroid(asteroids[x]);
+       if(asteroids[x]->hit()){  
+         destroyAsteroid(asteroids[x]);
        }
+     }
     }
   }
   for(unsigned int y= 0; y<drones.size(); y++){
     drones[y]->move( 600, 600 );
+    if(player->rect().intersects(drones[y]->rect())){
+      player->decreaseLife();
+      destroyDrone(drones[y]);
+    }
     for(unsigned int u= 0; u<lasers.size(); u++){
       if(lasers[u]->rect().intersects(drones[y]->rect())){
        destroyLaser(lasers[u]);
-       destroyDrone(drones[y]);
+       if(drones[y]->hit()){
+         destroyDrone(drones[y]);
        }
+     }
     }
   }
   for(unsigned int z= 0; z<praetorians.size(); z++){
     praetorians[z]->move( 600, 600 );
+    if(player->rect().intersects(praetorians[z]->rect())){
+      player->decreaseLife();
+      destroyPraetorian(praetorians[z]);
+    }
     for(unsigned int u= 0; u<lasers.size(); u++){
       if(lasers[u]->rect().intersects(praetorians[z]->rect())){
        destroyLaser(lasers[u]);
-       destroyPraetorian(praetorians[z]);
+       if(praetorians[z]->hit()){
+         destroyPraetorian(praetorians[z]);
        }
+     }
     }
   }
   for(unsigned int a= 0; a<death.size(); a++){
@@ -51,8 +72,10 @@ void MainWindow::handleTimer() {
     for(unsigned int u= 0; u<lasers.size(); u++){
       if(lasers[u]->rect().intersects(death[a]->rect())){
        destroyLaser(lasers[u]);
-       destroyDeathknight(death[a]);
+       if(death[a]->hit()){
+         destroyDeathknight(death[a]);
        }
+     }
     }
   }
   for(unsigned int c= 0; c<packages.size(); c++){
@@ -100,7 +123,7 @@ void MainWindow::handleTimer() {
       asteroids.push_back(thing5);
     }
     timerCheck= timerCheck-difficulty;
-    difficulty--;
+    difficulty= difficulty-5;
   }
 }
 
@@ -165,14 +188,34 @@ void MainWindow::destroyPackage(Care *thing){
   }
 }
 
+
+void MainWindow::pause(){
+  if(timer->isActive()){
+    timer->stop();
+  }
+  else{
+    timer->start();
+  }
+}
+
 void MainWindow::run(){
-  timer->start();  
+  if(timer->isActive()){
+      gameOver();
+    }
+    else{
+      timer->start();
+    }
+}
+
+void MainWindow::gameOver(){
+  qApp->exit( restartCode );
 }
 
 MainWindow::MainWindow(){  
 
   timerCheck= 0;
   difficulty= 200;
+  restartCode= -333;
   
   scene= new QGraphicsScene(this);
   view= new QGraphicsView();
@@ -183,12 +226,8 @@ MainWindow::MainWindow(){
   QGraphicsRectItem *rectObj= new QGraphicsRectItem(0, 0, 600, 600);
   scene->addItem(rectObj);
   player= new Player(270, 520, this, scene);
-  LeftMove *left= new LeftMove(0, 520, player);
-  QBrush brush(Qt::red);
-  left->setBrush(brush);
-  RightMove *right= new RightMove(560, 520, player);
-  QBrush brush1(Qt::blue);
-  right->setBrush(brush1);
+  LeftMove *left= new LeftMove(0, 520, player, scene);
+  RightMove *right= new RightMove(560, 520, player, scene);
   scene->addItem(player);
   scene->addItem(left);
   scene->addItem(right);
@@ -214,15 +253,24 @@ MainWindow::MainWindow(){
   connect(startButton, SIGNAL(clicked()), this, SLOT(run()));
   h1->addWidget(startButton);
   
-  scoreButton= new QPushButton("Scores");
-  scoreButton->setFont(QFont("Times", 18, QFont::Bold));
-  //connect(quitButton, SIGNAL(clicked()), qApp, SLOT(quit()));
-  h1->addWidget(scoreButton);
+  pauseButton= new QPushButton("Pause");
+  pauseButton->setFont(QFont("Times", 18, QFont::Bold));
+  connect(pauseButton, SIGNAL(clicked()), this, SLOT(pause()));
+  h1->addWidget(pauseButton);
+  
+  scoreDisplay= new QLCDNumber(7);
+  scoreDisplay->display(player->getScore());
+  h1->addWidget(scoreDisplay);
+  
+  lifeDisplay= new QLCDNumber(2);
+  lifeDisplay->display(player->getLife());
+  h1->addWidget(lifeDisplay);
   
   quitButton= new QPushButton("Quit");
   quitButton->setFont(QFont("Times", 18, QFont::Bold));
   connect(quitButton, SIGNAL(clicked()), qApp, SLOT(quit()));
   h1->addWidget(quitButton);
+  
   
   vLay->addLayout(h1);
   
@@ -236,7 +284,6 @@ MainWindow::~MainWindow(){
   delete scene;
   delete view;
   delete startButton;
-  delete scoreButton;
   delete quitButton;
   delete h1;
   delete h2;

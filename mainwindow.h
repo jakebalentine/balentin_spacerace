@@ -6,6 +6,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QGraphicsRectItem>
+#include <QLCDNumber>
 #include <QTimer>
 #include <QTimeLine>
 #include <QGridLayout>
@@ -52,6 +53,7 @@ class MainWindow : public QWidget {
   void destroyPraetorian(Praetorian *thing);
   void destroyDeathknight(Deathknight *thing);
   void destroyPackage(Care *thing);
+  void gameOver();
   
  private:
   /** Inherited widget */
@@ -70,8 +72,12 @@ class MainWindow : public QWidget {
   QPushButton *startButton;
   /** Quit button */
   QPushButton *quitButton;
-  /** Score button */
-  QPushButton *scoreButton;
+  /** Pause button */
+  QPushButton *pauseButton;
+  /** Score display */
+  QLCDNumber *scoreDisplay;
+  /** Life display */
+  QLCDNumber *lifeDisplay;
   /** Timer for animation */
   QTimer *timer;
   /** Vector of asteroids */
@@ -82,17 +88,15 @@ class MainWindow : public QWidget {
   std::vector<Deathknight *> death;
   std::vector<Laser *> lasers;
   std::vector<Care *> packages;
-  int timerCheck, difficulty;
+  int timerCheck, difficulty, restartCode;
   
   QGraphicsPixmapItem *background;
   
   public slots:
-   /** Starts the game */
+   /** Starts the game or restarts if already started */
    void run();
-   /** Runs puzzle solver */
-   //void cheatRun();
-   /** Used for animation */
-   //void handleTimer();
+   /** Pauses the game */
+   void pause();
    /** Used for animation */
    void handleTimer();
 

@@ -13,7 +13,7 @@ Deathknight::Deathknight(double nx, double ny, MainWindow *mw, QGraphicsScene *s
     height = 60;
     velocityX = 4;
     velocityY = 0;
-    life= 2;
+    life= 10;
     window= mw;
     scene= s;
     image= new QGraphicsPixmapItem(QPixmap("images/deathknight.png"), this, scene);
@@ -22,6 +22,16 @@ Deathknight::Deathknight(double nx, double ny, MainWindow *mw, QGraphicsScene *s
 
 Deathknight::~Deathknight(){
 
+}
+
+bool Deathknight::hit(){
+  --life;
+  if(life<1){
+    return true;
+  }
+  else{
+    return false;
+  }
 }
 
 int Deathknight::getVelocityX() {

@@ -13,7 +13,7 @@ Praetorian::Praetorian(double nx, double ny, MainWindow *mw, QGraphicsScene *s, 
     height = 60;
     velocityX = 0;
     velocityY = 4;
-    life= 2;
+    life= 5;
     window= mw;
     scene= s;
     image= new QGraphicsPixmapItem(QPixmap("images/praetorian.png"), this, scene);
@@ -23,6 +23,16 @@ Praetorian::Praetorian(double nx, double ny, MainWindow *mw, QGraphicsScene *s, 
 
 Praetorian::~Praetorian(){
 
+}
+
+bool Praetorian::hit(){
+  --life;
+  if(life<1){
+    return true;
+  }
+  else{
+    return false;
+  }
 }
 
 int Praetorian::getVelocityX() {

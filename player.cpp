@@ -13,7 +13,7 @@ Player::Player(double nx, double ny, MainWindow *mw, QGraphicsScene *s) :
     height = 40;
     velocityX = 0;
     velocityY = 0;
-    life= 3;
+    life= 5;
     multiplier= 1;
     score= 0;
     window= mw;
@@ -62,7 +62,14 @@ void Player::increasePoints(int points){
   score= score + (points*multiplier);
 }
 
-void Player::move( int windowMaxX, int windowMaxY ) {
+void Player::decreaseLife(){
+  life--;
+  if(life<1){
+    window->gameOver();
+  }
+}
+
+void Player::move() {
     
     x += velocityX;
     y += velocityY;
@@ -91,6 +98,14 @@ int Player::getX() {
 
 int Player::getY() {
     return y;
+}
+
+int Player::getScore(){
+  return score;
+}
+
+int Player::getLife(){
+  return life;
 }
 
 void Player::setX(int nx) {

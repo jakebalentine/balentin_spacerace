@@ -22,11 +22,14 @@ public:
     void setVelocityY( int vy );
     void increaseMultiplier();
     void increasePoints(int points);
+    void decreaseLife();
+    int getScore();
+    int getLife();
     int getX();
     int getY();
     int getVelocityX();
     int getVelocityY();
-    void move(int windowMaxX, int windowMaxY );
+    void move();
     void fire();
     MainWindow *window;
     QGraphicsScene *scene;

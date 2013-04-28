@@ -13,7 +13,7 @@ Drone::Drone(double nx, double ny, MainWindow *mw, QGraphicsScene *s) :
     height = 60;
     velocityX = 7;
     velocityY = 10;
-    life= 2;
+    life= 3;
     window= mw;
     scene= s;
     image= new QGraphicsPixmapItem(QPixmap("images/drone.png"), this, scene);
@@ -22,6 +22,16 @@ Drone::Drone(double nx, double ny, MainWindow *mw, QGraphicsScene *s) :
 
 Drone::~Drone(){
 
+}
+
+bool Drone::hit(){
+  --life;
+  if(life<1){
+    return true;
+  }
+  else{
+    return false;
+  }
 }
 
 int Drone::getVelocityX() {

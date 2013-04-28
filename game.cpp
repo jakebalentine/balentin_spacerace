@@ -3,11 +3,15 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-    MainWindow w;
+    int exitCode= 0;
+    
+    do{
+      QApplication a(argc, argv);
+      MainWindow w;
 
-    w.show();
+      w.show();
+      exitCode= a.exec();
+    } while (exitCode == -333);
 
-
-    return a.exec();
+    return exitCode;
 }
